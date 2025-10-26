@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import memoriesRouter from "./routes/memoriesRouter.js"
 import userRouter from "./routes/userRouter.js"
 import locationRouter from "./routes/locationRouter.js"
+import authRouter from "./routes/authRouter.js"
 
 dotenv.config()
 const app = express();
@@ -18,15 +19,13 @@ app.get('/', (req, res) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ Połączono z bazą:", mongoose.connection.name))
-  .catch((err) => console.error("❌ Błąd połączenia:", err));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB: ", mongoose.connection.name))
+  .catch((err) => console.error("MongoDB connection error: ", err));
 
 app.use('/api/memories', memoriesRouter);
 app.use('/api/user', userRouter);
 app.use('/api/location', locationRouter);
+app.use('/api/auth', authRouter);
 
 export default app;

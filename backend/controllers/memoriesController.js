@@ -1,6 +1,5 @@
-let memories = [
-  { id: 1, title: 'Pierwsze wspomnienie', description: 'Spacer nad Wisłą 💕' },
-];
+import Memory from '../models/Memory.js'
+import mongoose from 'mongoose';
 
 export const getMemories = (req, res) => {
   res.json(memories);

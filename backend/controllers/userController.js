@@ -1,7 +1,37 @@
-export const getUser = (req, res) => {
-  res.json("User");
-};
+import User from '../models/User.js'
+import bcrypt from 'bcrypt'
+import mongoose from 'mongoose';
 
-export const addUser = (req, res) => {
-  res.json("Adding user");
+
+export const getUser = (req, res) => {
+  const user = req.user;
+
+  try {
+    res.json(user);
+  }
+  catch {
+    res.status(500).json({ error: 'Internal server error.' });
+  }
+}
+
+export const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Incorrect id format.' });
+    }
+
+    const user = await User.findById(id).select('email firstName surname dateOfBirth role');
+
+    if (!user) {
+      return res.status(404).json({ message: 'No user with specified ID was found.' });
+    }
+
+    res.status(200).json(user);
+
+  } 
+  catch (error) {
+    res.status(500).json({ message: 'Internal server error.' });
+  }
 };
