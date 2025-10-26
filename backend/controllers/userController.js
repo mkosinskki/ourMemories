@@ -6,7 +6,16 @@ export const getUser = (req, res) => {
   const user = req.user;
 
   try {
-    res.json(user);
+    const userToReturn = {
+            _id: user._id,
+            email: user.email,
+            firstName: user.firstName,
+            surname: user.surname,
+            dateOfBirth: user.dateOfBirth,
+            role: user.role
+        };
+
+        res.status(200).json(userToReturn);
   }
   catch {
     res.status(500).json({ error: 'Internal server error.' });
