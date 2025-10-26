@@ -1,10 +1,14 @@
 import Location from '../models/Location.js'
 import mongoose from 'mongoose';
 
-export const getLocation = (req, res) => {
-  res.json("Location");
-};
+export const getAllLocations = async (req, res) => {
+    try {
+        const locations = await Location.find().select('name location');
 
-export const addLocation = (req, res) => {
-  res.json("Adding new location");
+        res.status(200).json(locations);
+    } 
+    catch (error) {
+        console.error("Błąd podczas pobierania lokalizacji:", error);
+        res.status(500).json({ message: "Wystąpił wewnętrzny błąd serwera." });
+    }
 };

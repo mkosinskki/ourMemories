@@ -1,5 +1,4 @@
 import User from '../models/User.js'
-import bcrypt from 'bcrypt'
 import mongoose from 'mongoose';
 
 
@@ -22,7 +21,7 @@ export const getUserById = async (req, res) => {
       return res.status(400).json({ message: 'Incorrect id format.' });
     }
 
-    const user = await User.findById(id).select('email firstName surname dateOfBirth role');
+    const user = await User.findById(id).select('_id email firstName surname dateOfBirth role');
 
     if (!user) {
       return res.status(404).json({ message: 'No user with specified ID was found.' });
