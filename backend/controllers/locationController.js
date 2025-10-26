@@ -8,7 +8,6 @@ export const getAllLocations = async (req, res) => {
         res.status(200).json(locations);
     } 
     catch (error) {
-        console.error("Błąd podczas pobierania lokalizacji:", error);
-        res.status(500).json({ message: "Wystąpił wewnętrzny błąd serwera." });
+        res.status(500).json({ message: "Internal server error." });
     }
 };

@@ -63,22 +63,9 @@ export const login = async (req, res) => {
             return res.status(400).json({ msg: 'Incorrect login/password.' });
         }
 
-        const payload = {
-            user: {
-                id: user.id
-            }
-        };
-
-        jwt.sign(
-            payload,
-            process.env.JWT_SECRET, 
-            { expiresIn: '2h' },
-            (err, token) => {
-                if (err) throw err;
-                const { password, ...userToReturn } = user.toObject();
-                res.status(200).json({ token: token, user: userToReturn });
-            }
-        );
+        const token = generateToken(user._id);
+        const { password: _, ...userToReturn } = user.toObject();
+        res.status(200).json({ token: token, user: userToReturn });
 
     } 
     catch (err) {
