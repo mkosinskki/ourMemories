@@ -8,11 +8,18 @@ export const getMemories = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 12;
-        // const page = 1;
-        // const limit = 12;
+
+        page = Math.max(page, 1);
+        limit = Math.max(limit, 1);
+
+        const MAX_LIMIT_PER_PAGE = 50;
+        limit = Math.min(limit, MAX_LIMIT_PER_PAGE);
+
         const skip = (page - 1) * limit;
 
-        const { lng, lat, maxDistance } = req.query;
+        const { lng, lat } = req.query;
+        let maxDistance = parseInt(req.query.maxDistance) || 100000;
+        maxDistance = Math.max(maxDistance, 1);
 
         const { sortBy, sortOrder } = req.query;
         const order = sortOrder === 'asc' ? 1 : -1;
@@ -26,7 +33,7 @@ export const getMemories = async (req, res) => {
                         coordinates: [parseFloat(lng), parseFloat(lat)] 
                     },
                     distanceField: 'distance', 
-                    maxDistance: parseInt(maxDistance) || 10000000,
+                    maxDistance: maxDistance,
                     spherical: true,
                 }
             });
@@ -91,7 +98,8 @@ export const getMemories = async (req, res) => {
             totalMemories: totalMemories
         });
 
-    } catch (error) {
+    } 
+    catch (error) {
         res.status(500).json({ message: "Internal server error." });
     }
 };
@@ -136,7 +144,8 @@ export const addMemory = async (req, res) => {
 
         res.status(201).json(populatedMemory);
 
-    } catch (error) {
+    } 
+    catch (error) {
         await session.abortTransaction();
         if (error.name === 'ValidationError') {
             const errors = {};
@@ -147,7 +156,8 @@ export const addMemory = async (req, res) => {
         }
         res.status(500).json({ message: "Internal server error." });
 
-    } finally {
+    } 
+    finally {
         session.endSession();
     }
 };

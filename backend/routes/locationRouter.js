@@ -6,5 +6,4 @@ const router = express.Router();
 
 router.get('/', protect, getAllLocations);
 
-// router.get('/', protect, getAllLocation);
 export default router;
