@@ -1,15 +1,11 @@
-/* @import './base.css';
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities"; */
-
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-  --color-whiteBlue: #daf0ff;
-  --color-color1: #b5e2ff;
-  --color-color2: #8fd3fe;
-  --color-color3: #6ac5fe;
-  --color-color4: #45b6fe;
+  --color-whiteBlue: #DAF0FF;
+  --color-color1: #B5E2FF;
+  --color-color2: #8FD3FE;
+  --color-color3: #6AC5FE;
+  --color-color4: #45B6FE;
 }
 
 #app {
