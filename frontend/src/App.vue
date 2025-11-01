@@ -8,7 +8,7 @@ import { RouterView } from 'vue-router'
 
 <style>
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -16,7 +16,7 @@ import { RouterView } from 'vue-router'
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-color4); 
+  background-color: var(--color-color4);
   border-radius: 8px;
 }
 
@@ -24,12 +24,9 @@ import { RouterView } from 'vue-router'
   background-color: var(--color-whiteBlue);
 }
 
-::-webkit-scrollbar-button:increment
+::-webkit-scrollbar-button:increment html {
+  scrollbar-width: thin;
 
-html {
-  scrollbar-width: thin; 
-  
   scrollbar-color: var(--color-color4) #00000060;
 }
-
 </style>
