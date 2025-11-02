@@ -40,14 +40,19 @@ The application is currently **in development**. Follow this section for updates
 **Current functionalities:**
 - Working backend with APIs,
 - Added LoginPage (frontend + logic),
+- Added RegisterPage ((frontend + logic),
+- Added Navbar (to use later)
 
 **Planned features:**
-- Register page (frontend + logic)  
+- Profil page (frontend + logic)
 ---
 
 ## 🖥️ How to install
 ```bash
 git clone https://github.com/mkosinskki/ourMemories.git
+
+# Open backend folder and add .env file
+# In .env file create variables: MONGO_URI (your mongodb connection link), JWT_SECRET (your key)
 
 # Open two terminals, in one open backend folder, in second open frontend.
 
