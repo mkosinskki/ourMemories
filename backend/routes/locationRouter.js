@@ -1,9 +1,9 @@
 import express from 'express';
 import { getAllLocations } from '../controllers/locationController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', protect, getAllLocations);
+router.get('/', protect, authorize(1), getAllLocations);
 
 export default router;
