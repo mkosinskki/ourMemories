@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '../views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
+import Test from '@/views/Test.vue'
+import ProfilePage from '@/views/ProfilePage.vue'
+import UnauthorizedError from '@/views/UnauthorizedError.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +24,33 @@ const router = createRouter({
         title: 'OM - Register'
       }
     },
+    {
+      path: '/unauthorized',
+      name: 'unauthorized',
+      component: UnauthorizedError,
+      meta: {
+        title: 'OM - Unauthorized'
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfilePage,
+      meta: {
+        title: 'OM - Profile',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test,
+      meta: {
+        title: 'OM - test',
+        requiresAuth: true,
+        roles: [1] 
+      }
+    },
   ],
 })
 
@@ -30,7 +60,32 @@ router.beforeEach((to, from, next) => {
   } else {
     document.title = 'Our memories'; 
   }
+
+  const token = localStorage.getItem('token');
+  const userString = localStorage.getItem('user');
+  let user = null;
+
+  if (userString) {
+    user = JSON.parse(userString);
+  }
+
+  const requiresAuth = to.meta.requiresAuth;
+  const requiredRoles = to.meta.roles;
+
+  if (requiresAuth && !token) {
+    return next({ name: 'login' });
+  }
+
+  if (requiresAuth && requiredRoles && user) {
+    if (!requiredRoles.includes(user.role)) {
+      return next({ name: 'unauthorized' });
+    }
+  }
+
+  if ((to.name === 'login' || to.name === 'register') && token) {
+     return next({ name: 'profile' });
+  }
   next();
-});
+})
 
 export default router
