@@ -4,6 +4,7 @@ import RegisterPage from '@/views/RegisterPage.vue'
 import Test from '@/views/Test.vue'
 import ProfilePage from '@/views/ProfilePage.vue'
 import UnauthorizedError from '@/views/UnauthorizedError.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,14 @@ const router = createRouter({
         roles: [1] 
       }
     },
+    {
+      path: '/:pathMatch(.*)*', 
+      name: 'notFound',
+      component: NotFound,
+      meta: {
+        title: 'OM - Page not found'
+      }
+    }
   ],
 })
 
