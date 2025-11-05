@@ -8,7 +8,7 @@
         <img src="../assets/logo.png" alt="Unauthorized" class="w-70 h-auto md:w-100" /> 
         <div class="bg-whiteBlue rounded-xl shadow-lg px-8 py-4">
           <h1 class="text-2xl md:text-3xl font-bold text-black/90">
-            404 - Page not found
+            401 - Unauthorized
           </h1>
         </div>
 

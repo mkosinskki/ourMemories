@@ -3,7 +3,7 @@ import LoginPage from '../views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 import Test from '@/views/Test.vue'
 import ProfilePage from '@/views/ProfilePage.vue'
-import UnauthorizedError from '@/views/UnauthorizedError.vue'
+import Unauthorized from '@/views/Unauthorized.vue'
 import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: '/unauthorized',
       name: 'unauthorized',
-      component: UnauthorizedError,
+      component: Unauthorized,
       meta: {
         title: 'OM - Unauthorized'
       }
