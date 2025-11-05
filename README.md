@@ -41,7 +41,8 @@ The application is currently **in development**. Follow this section for updates
 - Working backend with APIs,
 - Added LoginPage (frontend + logic),
 - Added RegisterPage ((frontend + logic),
-- Added Navbar (to use later)
+- Added Navbar (to use later),
+- 401 and 404 page,
 
 **Planned features:**
 - Profil page (frontend + logic)
@@ -52,7 +53,7 @@ The application is currently **in development**. Follow this section for updates
 git clone https://github.com/mkosinskki/ourMemories.git
 
 # Open backend folder and add .env file
-# In .env file create variables: MONGO_URI (your mongodb connection link), JWT_SECRET (your key)
+# In .env file create variables: MONGO_URI (your mongodb connection link), JWT_SECRET (your key), UPLOADS_DIR (path to folder for photos)
 
 # Open two terminals, in one open backend folder, in second open frontend.
 
