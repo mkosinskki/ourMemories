@@ -8,68 +8,68 @@
       <div class="flex flex-col items-center">
         <img src="../assets/logo.png" alt="Logo" class="w-40 h-auto mb-0" />
 
-        <h2 class="text-2xl font-bold text-[#000000]/90 mb-2">Zarejestruj się</h2>
+        <h2 class="text-2xl font-bold text-heading mb-2">Zarejestruj się</h2>
 
-        <p class="text-sm text-[#000000]/90 mb-8 text-center">
+        <p class="text-sm text-heading mb-8 text-center">
           Utwórz konto i przejrzyj nasze wspomnienia!
         </p>
 
         <form class="w-full space-y-6 min-h-[600px]" @submit.prevent="submit">
           <div class="flex gap-6">
             <div class="flex-1">
-              <label for="firstName" class="block text-medium font-medium text-[#000000]/90 mb-1"
+              <label for="firstName" class="block text-medium font-medium text-heading mb-1"
                 >Imie</label
               >
               <input
                 type="text"
                 id="firstName"
                 placeholder="First name"
-                class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+                class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
                 v-model="firstName"
               />
             </div>
 
             <div class="flex-1">
-              <label for="surname" class="block text-medium font-medium text-[#000000]/90 mb-1"
+              <label for="surname" class="block text-medium font-medium text-heading mb-1"
                 >Nazwisko</label
               >
               <input
                 type="text"
                 id="surname"
                 placeholder="Surname"
-                class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+                class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
                 v-model="surname"
               />
             </div>
           </div>
 
           <div>
-            <label for="dateOfBirth" class="block text-medium font-medium text-[#000000]/90 mb-1"
+            <label for="dateOfBirth" class="block text-medium font-medium text-heading mb-1"
               >Data urodzenia</label
             >
             <input
               type="date"
               id="dateOfBirth"
-              class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+              class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
               v-model="dateOfBirth"
             />
           </div>
 
           <div>
-            <label for="email" class="block text-medium font-medium text-[#000000]/90 mb-1"
+            <label for="email" class="block text-medium font-medium text-heading mb-1"
               >Email</label
             >
             <input
               type="email"
               id="email"
               placeholder="example@mail.com"
-              class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+              class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
               v-model="email"
             />
           </div>
 
           <div>
-            <label for="password" class="block text-medium font-medium text-[#000000]/90 mb-1">
+            <label for="password" class="block text-medium font-medium text-heading mb-1">
               Hasło
             </label>
             <div class="relative">
@@ -77,14 +77,14 @@
                 :type="showPassword ? 'text' : 'password'"
                 id="password"
                 placeholder="••••••••"
-                class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+                class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder0 text-sm"
                 v-model="password"
               />
 
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 hover:text-gray-700"
+                class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-formPlaceholder hover:text-gray-700"
               >
                 <svg
                   v-if="!showPassword"
@@ -128,7 +128,7 @@
           <div>
             <label
               for="passwordConfirmation"
-              class="block text-medium font-medium text-[#000000]/90 mb-1"
+              class="block text-medium font-medium text-heading mb-1"
             >
               Powtórz hasło
             </label>
@@ -137,14 +137,14 @@
                 :type="showPasswordConfirmation ? 'text' : 'password'"
                 id="passwordConfirmation"
                 placeholder="••••••••"
-                class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+                class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
                 v-model="passwordConfirmation"
               />
 
               <button
                 type="button"
                 @click="showPasswordConfirmation = !showPasswordConfirmation"
-                class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 hover:text-gray-700"
+                class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-formPlaceholder hover:text-gray-700"
               >
                 <svg
                   v-if="!showPasswordConfirmation"
@@ -187,7 +187,7 @@
 
           <button
             type="submit"
-            class="w-full p-3.5 mt-8 rounded-lg bg-white/80 text-[#000000]/90 font-semibold hover:bg-white transition-colors hover:text-color4"
+            class="w-full p-3.5 mt-8 rounded-lg bg-white/80 text-heading font-semibold hover:bg-white transition-colors hover:text-color4"
           >
             {{ loading ? 'Rejestrowanie...' : 'Zarejestruj się' }}
           </button>
@@ -203,9 +203,9 @@
         </form>
 
         <div class="mt-6 text-center text-sm">
-          <p class="text-[#000000]/70">
+          <p class="text-basictext">
             Masz już konto?
-            <a href="/login" class="font-medium text-[#000000]/70 underline hover:text-color4"
+            <a href="/login" class="font-medium text-basictext underline hover:text-color4"
               >Zaloguj się.</a
             >
           </p>
@@ -277,7 +277,7 @@ const submit = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   try {
-    const response = await axios.post('http://localhost:6969/api/auth/register', {
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
       email: email.value,
       password: password.value,
       firstName: firstName.value,

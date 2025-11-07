@@ -8,42 +8,42 @@
       <div class="flex flex-col items-center">
         <img src="../assets/logo.png" alt="Logo" class="w-40 h-auto mb-0" />
 
-        <h2 class="text-2xl font-bold text-[#000000]/90 mb-2">Cześć Natifilip4</h2>
+        <h2 class="text-2xl font-bold text-heading mb-2">Cześć Natifilip4</h2>
 
-        <p class="text-sm text-[#000000]/90 mb-8 text-center">
+        <p class="text-sm text-heading mb-8 text-center">
           Zaloguj się na swoje konto by oglądać wspomnienia.
         </p>
 
         <form class="w-full space-y-6 min-h-[350px]" @submit.prevent="submit">
           <div>
-            <label for="email" class="block text-medium font-medium text-[#000000]/90 mb-1"
+            <label for="email" class="block text-medium font-medium text-heading mb-1"
               >Email</label
             >
             <input
               type="email"
               id="email"
               placeholder="example@mail.com"
-              class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+              class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
               v-model="email"
             />
           </div>
 
           <div>
-            <label for="password" class="block text-medium font-medium text-[#000000]/90 mb-1"
+            <label for="password" class="block text-medium font-medium text-heading mb-1"
               >Hasło</label
             >
             <input
               type="password"
               id="password"
               placeholder="••••••••"
-              class="w-full p-3.5 rounded-lg border-none bg-white/70 focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-gray-500 text-sm"
+              class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
               v-model="password"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full p-3.5 mt-8 rounded-lg bg-white/80 text-[#000000]/90 font-semibold hover:bg-white transition-colors hover:text-color4"
+            class="w-full p-3.5 mt-8 rounded-lg bg-white/80 text-heading font-semibold hover:bg-white transition-colors hover:text-color4"
           >
             {{ loading ? 'Logowanie...' : 'Zaloguj się' }}
           </button>
@@ -59,17 +59,17 @@
         </form>
 
         <div class="mt-6 text-center text-sm">
-          <p class="text-[#000000]/70">
+          <p class="text-basictext">
             Nie pamiętasz hasła?
             <a
               href="/passowrd-reset"
-              class="font-medium text-[#000000]/70 underline hover:text-color4"
+              class="font-medium text-basictext underline hover:text-color4"
               >Zresetuj je.</a
             >
           </p>
-          <p class="text-[#000000]/70 mt-2">
+          <p class="text-basictext mt-2">
             Nie masz jeszcze konta?
-            <a href="/register" class="font-medium text-[#000000]/70 underline hover:text-color4"
+            <a href="/register" class="font-medium text-basictext underline hover:text-color4"
               >Zarejestruj się.</a
             >
           </p>
@@ -104,7 +104,7 @@ const submit = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   try {
-    const response = await axios.post('http://localhost:6969/api/auth/login', {
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
       email: email.value,
       password: password.value,
     })
