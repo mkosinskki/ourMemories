@@ -43,9 +43,10 @@ The application is currently **in development**. Follow this section for updates
 - Added RegisterPage ((frontend + logic),
 - Added Navbar (to use later),
 - 401 and 404 page,
+- Profil page (frontend + logic),
 
 **Planned features:**
-- Profil page (frontend + logic)
+- Memories page (frontend + logic)
 ---
 
 ## 🖥️ How to install
@@ -53,7 +54,14 @@ The application is currently **in development**. Follow this section for updates
 git clone https://github.com/mkosinskki/ourMemories.git
 
 # Open backend folder and add .env file
-# In .env file create variables: MONGO_URI (your mongodb connection link), JWT_SECRET (your key), UPLOADS_DIR (path to folder for photos)
+# In .env file create variables: 
+# - MONGO_URI (your mongodb connection link), 
+# - JWT_SECRET (your key), 
+# - UPLOADS_DIR (path to folder for photos)
+
+# Open frontend folder and add .env file
+# In .env file create variable:
+# - VITE_BACKEND_URL (url to your backend app)
 
 # Open two terminals, in one open backend folder, in second open frontend.
 
