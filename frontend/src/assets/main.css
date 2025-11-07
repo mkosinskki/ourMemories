@@ -8,6 +8,8 @@
   --color-color4: #45b6fe;
   --color-heading: #121212;
   --color-basictext: #212121;
+  --color-formBg: rgba(255, 255, 255, 0.7);
+  --color-formPlaceholder: #6a7282;
 }
 
 #app {

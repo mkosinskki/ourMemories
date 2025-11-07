@@ -7,17 +7,17 @@
         </div>
 
         
-        <div class="hidden md:flex space-x-15 text-[#000000]/90 font-medium">
-          <a href="/map" class="hover:text-whiteBlue transition">Map</a>
+        <div class="hidden md:flex space-x-15 text-heading font-medium">
+          <a href="/map" class="hover:text-whiteBlue transition">Mapa</a>
           <a href="/panel" class="hover:text-whiteBlue transition">Panel</a>
-          <a href="/profile" class="hover:text-whiteBlue transition">Profile</a>
+          <a href="/profile" class="hover:text-whiteBlue transition">Profil</a>
         </div>
 
 
         <div class="md:hidden">
           <button
             @click="isOpen = !isOpen"
-            class="inline-flex items-center justify-center p-2 rounded-md text-[#000000]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+            class="inline-flex items-center justify-center p-2 rounded-md text-heading focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
           >
             <svg
               v-if="!isOpen"
@@ -47,10 +47,10 @@
 
     <transition name="fade">
       <div v-if="isOpen" class="md:hidden bg-color1 shadow-inner">
-        <div class="px-4 py-4 space-y-2 text-center text-[#000000]/90 font-medium">
-          <a href="/map" class="block py-2 hover:text-color4">Map</a>
+        <div class="px-4 py-4 space-y-2 text-center text-heading font-medium">
+          <a href="/map" class="block py-2 hover:text-color4">Mapa</a>
           <a href="/panel" class="block py-2 hover:text-color4">Panel</a>
-          <a href="/profile" class="block py-2 hover:text-color4">Profile</a>
+          <a href="/profile" class="block py-2 hover:text-color4">Profil</a>
         </div>
       </div>
     </transition>

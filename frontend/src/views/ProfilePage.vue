@@ -48,7 +48,7 @@
       <div class="bg-whiteBlue rounded-xl shadow-md p-5 min-h-[600px]">
         <div class="bg-color3 rounded-md">
           <h3 class="text-2xl font-bold text-heading text-center mb-6 p-3">
-            Statistics
+            Statystyki
           </h3>
         </div>
 
@@ -89,7 +89,7 @@ async function fetchUser() {
       throw new Error('Missing token in lokalstorage.')
     }
 
-    const response = await fetch('http://localhost:6969/api/user/me', {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/me`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -133,9 +133,9 @@ function formatLocalDate(dateString) {
 
 const statsGrid = computed(() => {
   return [
-    { label: 'Memories added', value: safeUser.value.postCount ?? '...' },
-    { label: 'Locations visited', value: safeUser.value.locationCount ?? '...' },
-    { label: 'First memory added', value: formatLocalDate(safeUser.value.firstMemoryDate) ?? '...' },
+    { label: 'Dodane wspomnienia', value: safeUser.value.postCount ?? '...' },
+    { label: 'Odwiedzone lokacje', value: safeUser.value.locationCount ?? '...' },
+    { label: 'Pierwsze wspomnienie dodane', value: formatLocalDate(safeUser.value.firstMemoryDate) ?? '...' },
   ]
 })
 
