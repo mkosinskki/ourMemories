@@ -13,6 +13,10 @@ export const getUser = async (req, res) => {
     });
     const locationCount = uniqueLocationIds.length;
 
+    const firstMemory = await Memory.findOne({ user: user._id })
+      .sort({ timestamp: 1 })
+      .select("timestamp");
+
     const userToReturn = {
       _id: user._id,
       email: user.email,
@@ -22,6 +26,7 @@ export const getUser = async (req, res) => {
       role: user.role,
       postCount: postCount,
       locationCount: locationCount,
+      firstMemoryDate: firstMemory ? firstMemory.timestamp : null,
     };
 
     res.status(200).json(userToReturn);
@@ -53,9 +58,14 @@ export const getUserById = async (req, res) => {
     const uniqueLocationIds = await Memory.distinct("location", { user: id });
     const locationCount = uniqueLocationIds.length;
 
+    const firstMemory = await Memory.findOne({ user: id })
+      .sort({ timestamp: 1 })
+      .select("timestamp");
+
     const userProfile = user.toObject();
     userProfile.postCount = postCount;
     userProfile.locationCount = locationCount;
+    userProfile.firstMemoryDate = firstMemory ? firstMemory.timestamp : null;
 
     res.status(200).json(userProfile);
   } catch (error) {

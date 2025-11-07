@@ -8,9 +8,9 @@
 
         
         <div class="hidden md:flex space-x-15 text-[#000000]/90 font-medium">
-          <a href="/mapa" class="hover:text-whiteBlue transition">Mapa</a>
+          <a href="/map" class="hover:text-whiteBlue transition">Map</a>
           <a href="/panel" class="hover:text-whiteBlue transition">Panel</a>
-          <a href="/profil" class="hover:text-whiteBlue transition">Profil</a>
+          <a href="/profile" class="hover:text-whiteBlue transition">Profile</a>
         </div>
 
 
@@ -48,9 +48,9 @@
     <transition name="fade">
       <div v-if="isOpen" class="md:hidden bg-color1 shadow-inner">
         <div class="px-4 py-4 space-y-2 text-center text-[#000000]/90 font-medium">
-          <a href="/map" class="block py-2 hover:text-color4">Mapa</a>
+          <a href="/map" class="block py-2 hover:text-color4">Map</a>
           <a href="/panel" class="block py-2 hover:text-color4">Panel</a>
-          <a href="/profile" class="block py-2 hover:text-color4">Profil</a>
+          <a href="/profile" class="block py-2 hover:text-color4">Profile</a>
         </div>
       </div>
     </transition>

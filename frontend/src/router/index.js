@@ -14,24 +14,24 @@ const router = createRouter({
       name: 'login',
       component: LoginPage,
       meta: {
-        title: 'OM - Login'
-      }
+        title: 'OM - Login',
+      },
     },
     {
       path: '/register',
       name: 'register',
       component: RegisterPage,
       meta: {
-        title: 'OM - Register'
-      }
+        title: 'OM - Register',
+      },
     },
     {
       path: '/unauthorized',
       name: 'unauthorized',
       component: Unauthorized,
       meta: {
-        title: 'OM - Unauthorized'
-      }
+        title: 'OM - Unauthorized',
+      },
     },
     {
       path: '/profile',
@@ -39,8 +39,8 @@ const router = createRouter({
       component: ProfilePage,
       meta: {
         title: 'OM - Profile',
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
       path: '/test',
@@ -49,52 +49,82 @@ const router = createRouter({
       meta: {
         title: 'OM - test',
         requiresAuth: true,
-        roles: [1] 
-      }
+        roles: [1],
+      },
     },
     {
-      path: '/:pathMatch(.*)*', 
+      path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: NotFound,
       meta: {
-        title: 'OM - Page not found'
-      }
-    }
+        title: 'OM - Page not found',
+      },
+    },
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  } else {
-    document.title = 'Our memories'; 
-  }
-
-  const token = localStorage.getItem('token');
-  const userString = localStorage.getItem('user');
-  let user = null;
-
-  if (userString) {
-    user = JSON.parse(userString);
-  }
-
-  const requiresAuth = to.meta.requiresAuth;
-  const requiredRoles = to.meta.roles;
-
-  if (requiresAuth && !token) {
-    return next({ name: 'login' });
-  }
-
-  if (requiresAuth && requiredRoles && user) {
-    if (!requiredRoles.includes(user.role)) {
-      return next({ name: 'unauthorized' });
+async function verifyTokenAndGetUser(token) {
+  try {
+    const response = await fetch('http://localhost:6969/api/user/me', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    if (!response.ok) {
+      return null
     }
+    return await response.json()
+  } catch (error) {
+    console.error('Token verification error:', error)
+    return null
+  }
+}
+
+function clearAuthData() {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+}
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  } else {
+    document.title = 'Our memories'
   }
 
-  if ((to.name === 'login' || to.name === 'register') && token) {
-     return next({ name: 'profile' });
+  const token = localStorage.getItem('token')
+  const requiresAuth = to.meta.requiresAuth
+  const requiredRoles = to.meta.roles
+
+  if (to.name === 'login' || to.name === 'register') {
+    if (token) {
+      const user = await verifyTokenAndGetUser(token)
+      if (user) {
+        return next({ name: 'profile' })
+      } else {
+        clearAuthData()
+        return next()
+      }
+    }
+    return next()
   }
-  next();
+
+  if (requiresAuth) {
+    if (!token) {
+      return next({ name: 'login' })
+    }
+
+    const user = await verifyTokenAndGetUser(token)
+
+    if (!user) {
+      clearAuthData()
+      return next({ name: 'login' })
+    }
+
+    if (requiredRoles && !requiredRoles.includes(user.role)) {
+      return next({ name: 'unauthorized' })
+    }
+    return next()
+  }
+  next()
 })
 
 export default router
