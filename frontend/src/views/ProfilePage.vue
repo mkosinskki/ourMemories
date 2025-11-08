@@ -37,7 +37,10 @@
           </div>
 
           <div class="shrink-0">
-            <button class="text-sm font-medium text-heading hover:underline focus:outline-none px-4 py-2">
+            <button
+              @click="isEditPopupVisible = true"
+              class="text-sm font-medium text-heading hover:underline focus:outline-none px-4 py-2"
+            >
               Edit profile
             </button>
           </div>
@@ -70,15 +73,30 @@
 
     </div>
   </div>
+
+  <teleport to="body">
+    <transition name="fade">
+      <EditProfilePopup
+        v-if="isEditPopupVisible"
+        :user="safeUser"
+        @close="isEditPopupVisible = false"
+        @profile-updated="handleProfileUpdate"
+      />
+    </transition>
+  </teleport>
+
 </template>
 
 <script setup>
 import Navbar from '@/components/Navbar.vue';
+import EditProfilePopup from '@/components/EditProfilePopup.vue'
 import { ref, computed, onMounted } from 'vue'
 
 const user = ref(null)
 const isLoading = ref(false)
 const error = ref(null)
+
+const isEditPopupVisible = ref(false)
 
 async function fetchUser() {
   isLoading.value = true
@@ -131,6 +149,11 @@ function formatLocalDate(dateString) {
   }
 }
 
+function handleProfileUpdate(updatedUserData) {
+  user.value = { ...user.value, ...updatedUserData }
+  isEditPopupVisible.value = false
+}
+
 const statsGrid = computed(() => {
   return [
     { label: 'Dodane wspomnienia', value: safeUser.value.postCount ?? '...' },
@@ -141,4 +164,13 @@ const statsGrid = computed(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

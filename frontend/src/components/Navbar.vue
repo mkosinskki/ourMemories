@@ -11,6 +11,13 @@
           <a href="/map" class="hover:text-whiteBlue transition">Mapa</a>
           <a href="/panel" class="hover:text-whiteBlue transition">Panel</a>
           <a href="/profile" class="hover:text-whiteBlue transition">Profil</a>
+          <button
+            @click="logout"
+            class="text-red-500 hover:text-red-300 transition"
+            title="Wyloguj się"
+          >
+            Wyloguj
+          </button>
         </div>
 
 
@@ -51,6 +58,13 @@
           <a href="/map" class="block py-2 hover:text-color4">Mapa</a>
           <a href="/panel" class="block py-2 hover:text-color4">Panel</a>
           <a href="/profile" class="block py-2 hover:text-color4">Profil</a>
+          <button
+            @click="logout"
+            class="text-red-600 hover:text-red-400 transition"
+            title="Wyloguj się"
+          >
+            Wyloguj
+          </button>
         </div>
       </div>
     </transition>
@@ -59,7 +73,20 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 const isOpen = ref(false)
+const router = useRouter()
+
+function logout() {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+
+  isOpen.value = false
+
+  router.push({ path: '/login', replace: true })
+}
+
 </script>
 
 <style scoped>

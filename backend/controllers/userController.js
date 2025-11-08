@@ -35,6 +35,52 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const updateUser = async (req, res) => {
+  const userId = req.user._id;
+  const { firstName, surname, email, dateOfBirth } = req.body;
+
+  if (!firstName || !surname || !email || !dateOfBirth) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  try {
+    const updateData = {
+      firstName,
+      surname,
+      email,
+      dateOfBirth,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({
+        errors: { email: "User with this email exists." },
+      });
+    }
+    if (error.name === "ValidationError") {
+      const errors = {};
+      Object.keys(error.errors).forEach((key) => {
+        errors[key] = error.errors[key].message;
+      });
+      return res.status(400).json({ errors });
+    }
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
