@@ -7,7 +7,7 @@
       class="w-full max-w-[550px] min-h-[600px] bg-white/30 backdrop-blur-lg rounded-2xl border border-white/10 shadow-xl pb-8 px-6 pt-6 flex flex-col"
     >
       <div class="flex flex-col items-center flex-1">
-        <h2 class="text-2xl font-bold text-heading mb-6">Edytuj swój profil</h2>
+        <h2 class="text-2xl font-bold text-heading mb-6">{{ t('editProfile.title') }}</h2>
 
         <form class="w-full flex flex-col flex-1" @submit.prevent="handleSubmit">
           
@@ -15,7 +15,7 @@
             <div class="flex flex-col md:flex-row gap-4">
               <div class="flex-1">
                 <label for="firstName" class="block text-medium font-medium text-heading mb-1"
-                  >Imię</label
+                  >{{ t('editProfile.name') }}</label
                 >
                 <input
                   type="text"
@@ -27,7 +27,7 @@
               </div>
               <div class="flex-1">
                 <label for="surname" class="block text-medium font-medium text-heading mb-1"
-                  >Nazwisko</label
+                  >{{ t('editProfile.surname') }}</label
                 >
                 <input
                   type="text"
@@ -41,7 +41,7 @@
 
             <div>
               <label for="email" class="block text-medium font-medium text-heading mb-1"
-                >Email</label
+                >{{ t('editProfile.email') }}</label
               >
               <input
                 type="email"
@@ -54,7 +54,7 @@
 
             <div>
               <label for="dateOfBirth" class="block text-medium font-medium text-heading mb-1"
-                >Data urodzenia</label
+                >{{ t('editProfile.birthday') }}</label
               >
               <input
                 type="date"
@@ -79,14 +79,14 @@
               @click="$emit('close')"
               class="w-full p-3 rounded-lg bg-gray-300/60 text-heading font-semibold hover:bg-gray-300/90 transition-colors"
             >
-              Anuluj
+              {{ t('editProfile.cancel') }}
             </button>
             <button
               type="submit"
               class="w-full p-3 rounded-lg bg-white/80 text-heading font-semibold hover:bg-white transition-colors hover:text-color4"
               :disabled="loading"
             >
-              {{ loading ? 'Zapisywanie...' : 'Zapisz zmiany' }}
+              {{ loading ? t('editProfile.saving') : t('editProfile.save') }}
             </button>
           </div>
         </form>
@@ -97,6 +97,9 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   user: {
