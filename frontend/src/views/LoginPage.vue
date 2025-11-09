@@ -8,16 +8,16 @@
       <div class="flex flex-col items-center">
         <img src="../assets/logo.png" alt="Logo" class="w-40 h-auto mb-0" />
 
-        <h2 class="text-2xl font-bold text-heading mb-2">Cześć Natifilip4</h2>
+        <h2 class="text-2xl font-bold text-heading mb-2">{{ t('loginPage.title') }}</h2>
 
         <p class="text-sm text-heading mb-8 text-center">
-          Zaloguj się na swoje konto by oglądać wspomnienia.
+          {{ t('loginPage.info') }}
         </p>
 
         <form class="w-full space-y-6 min-h-[350px]" @submit.prevent="submit">
           <div>
             <label for="email" class="block text-medium font-medium text-heading mb-1"
-              >Email</label
+              >{{ t('loginPage.email') }}</label
             >
             <input
               type="email"
@@ -30,7 +30,7 @@
 
           <div>
             <label for="password" class="block text-medium font-medium text-heading mb-1"
-              >Hasło</label
+              >{{ t('loginPage.password') }}</label
             >
             <input
               type="password"
@@ -45,7 +45,7 @@
             type="submit"
             class="w-full p-3.5 mt-8 rounded-lg bg-white/80 text-heading font-semibold hover:bg-white transition-colors hover:text-color4"
           >
-            {{ loading ? 'Logowanie...' : 'Zaloguj się' }}
+            {{ loading ? t('loginPage.loginProgress') : t('loginPage.loginButton') }}
           </button>
 
           <transition name="fade">
@@ -60,17 +60,17 @@
 
         <div class="mt-6 text-center text-sm">
           <p class="text-basictext">
-            Nie pamiętasz hasła?
+            {{ t('loginPage.passReset') }}
             <a
               href="/passowrd-reset"
               class="font-medium text-basictext underline hover:text-color4"
-              >Zresetuj je.</a
+              >{{ t('loginPage.passResetLink') }}</a
             >
           </p>
           <p class="text-basictext mt-2">
-            Nie masz jeszcze konta?
+            {{ t('loginPage.register') }}
             <a href="/register" class="font-medium text-basictext underline hover:text-color4"
-              >Zarejestruj się.</a
+              >{{ t('loginPage.registerLink') }}</a
             >
           </p>
         </div>
@@ -83,6 +83,9 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const email = ref('')
 const password = ref('')
@@ -95,7 +98,7 @@ const submit = async () => {
   errorMessage.value = ''
 
   if (!email.value || !password.value) {
-    errorMessage.value = 'You have to enter email and password.'
+    errorMessage.value = t('loginPage.formCompletionError')
     return
   }
 
@@ -117,12 +120,12 @@ const submit = async () => {
       if (error.response.status === 400) {
         errorMessage.value = error.response.data?.msg
       } else {
-        errorMessage.value = 'Server error, try later.'
+        errorMessage.value = t('loginPage.serverError')
       }
     } else if (error.request) {
-      errorMessage.value = 'Response error, check your connection.'
+      errorMessage.value = t('loginPage.responseError')
     } else {
-      errorMessage.value = 'Unexpected error.'
+      errorMessage.value = t('loginPage.unexpectedError')
     }
   } finally {
     loading.value = false

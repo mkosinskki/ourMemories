@@ -8,7 +8,7 @@
         <img src="../assets/logo.png" alt="Unauthorized" class="w-70 h-auto md:w-100" /> 
         <div class="bg-whiteBlue rounded-xl shadow-lg px-8 py-4">
           <h1 class="text-2xl md:text-3xl font-bold text-heading">
-            404 - Nie znaleziono strony
+            {{ t('notFound.notFound') }}
           </h1>
         </div>
 
@@ -18,6 +18,9 @@
 
 <script setup>
 import Navbar from '@/components/Navbar.vue'; 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <style scoped> </style>

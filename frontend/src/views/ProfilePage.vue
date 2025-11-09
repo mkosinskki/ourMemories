@@ -41,7 +41,7 @@
               @click="isEditPopupVisible = true"
               class="text-sm font-medium text-heading hover:underline focus:outline-none px-4 py-2"
             >
-              Edit profile
+              {{ t('profilePage.editProfileButton') }}
             </button>
           </div>
 
@@ -51,7 +51,7 @@
       <div class="bg-whiteBlue rounded-xl shadow-md p-5 min-h-[600px]">
         <div class="bg-color3 rounded-md">
           <h3 class="text-2xl font-bold text-heading text-center mb-6 p-3">
-            Statystyki
+            {{ t('profilePage.statistics') }}
           </h3>
         </div>
 
@@ -91,6 +91,9 @@
 import Navbar from '@/components/Navbar.vue';
 import EditProfilePopup from '@/components/EditProfilePopup.vue'
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const user = ref(null)
 const isLoading = ref(false)
@@ -104,7 +107,7 @@ async function fetchUser() {
   try {
     const token = localStorage.getItem('token')
     if (!token) {
-      throw new Error('Missing token in lokalstorage.')
+      throw new Error(t('profilePage.tokenError'))
     }
 
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/me`, {
@@ -114,9 +117,9 @@ async function fetchUser() {
     })
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error('Unauthorized, maybe token expired.')
+        throw new Error(t('profilePage.expiredToken'))
       }
-      throw new Error('Failed to fetch user data.')
+      throw new Error(t('profilePage.fetchError'))
     }
     user.value = await response.json()
   } catch (e) {
@@ -145,6 +148,7 @@ function formatLocalDate(dateString) {
     return date.toLocaleDateString('pl-PL');
   } catch (e) {
     console.error(`Error while formating date "${dateString}":`, e);
+    console.error(t('profilePage.formatingDateError', { date: dateString }), e);
     return dateString;
   }
 }
@@ -156,9 +160,9 @@ function handleProfileUpdate(updatedUserData) {
 
 const statsGrid = computed(() => {
   return [
-    { label: 'Dodane wspomnienia', value: safeUser.value.postCount ?? '...' },
-    { label: 'Odwiedzone lokacje', value: safeUser.value.locationCount ?? '...' },
-    { label: 'Pierwsze wspomnienie dodane', value: formatLocalDate(safeUser.value.firstMemoryDate) ?? '...' },
+    { label: t('profilePage.addedMemory'), value: safeUser.value.postCount ?? '...' },
+    { label: t('profilePage.visitedLocations'), value: safeUser.value.locationCount ?? '...' },
+    { label: t('profilePage.firstMemory'), value: formatLocalDate(safeUser.value.firstMemoryDate) ?? '...' },
   ]
 })
 

@@ -126,7 +126,7 @@ function formatDateForInput(dateString) {
     const date = new Date(dateString)
     return date.toISOString().split('T')[0]
   } catch (e) {
-    console.error('Failed to format date:', e)
+    console.error(t('editProfile.errorDate'), e)
     return ''
   }
 }
@@ -147,7 +147,7 @@ async function handleSubmit() {
   try {
     const token = localStorage.getItem('token')
     if (!token) {
-      throw new Error('Missing token in localstorage.')
+      throw new Error(t('editProfile.errorToken'))
     }
 
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/me`, {
@@ -168,7 +168,7 @@ async function handleSubmit() {
       if (data.message) {
         throw new Error(data.message)
       }
-      throw new Error('Failed to update profile.')
+      throw new Error(t('editProfile.errorUpdate'))
     }
 
     emit('profile-updated', data.user)

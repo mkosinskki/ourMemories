@@ -14,7 +14,7 @@
           <button
             @click="logout"
             class="text-red-500 hover:text-red-300 transition"
-            title="t('nav.logout')"
+            :title="t('nav.logout')"
           >
             {{ t('nav.logout') }}
           </button>
@@ -76,7 +76,7 @@
           <button
             @click="logout"
             class="text-red-600 hover:text-red-400 transition"
-            title="t('nav.logout')"
+            :title="t('nav.logout')"
           >
             {{ t('nav.logout') }}
           </button>
