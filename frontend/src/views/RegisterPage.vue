@@ -8,22 +8,22 @@
       <div class="flex flex-col items-center">
         <img src="../assets/logo.png" alt="Logo" class="w-40 h-auto mb-0" />
 
-        <h2 class="text-2xl font-bold text-heading mb-2">Zarejestruj się</h2>
+        <h2 class="text-2xl font-bold text-heading mb-2">{{t('registerPage.title')}}</h2>
 
         <p class="text-sm text-heading mb-8 text-center">
-          Utwórz konto i przejrzyj nasze wspomnienia!
+          {{t('registerPage.info')}}
         </p>
 
         <form class="w-full space-y-6 min-h-[600px]" @submit.prevent="submit">
           <div class="flex gap-6">
             <div class="flex-1">
               <label for="firstName" class="block text-medium font-medium text-heading mb-1"
-                >Imie</label
+                >{{t('registerPage.name')}}</label
               >
               <input
                 type="text"
                 id="firstName"
-                placeholder="First name"
+                :placeholder="t('registerPage.name')"
                 class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
                 v-model="firstName"
               />
@@ -31,12 +31,12 @@
 
             <div class="flex-1">
               <label for="surname" class="block text-medium font-medium text-heading mb-1"
-                >Nazwisko</label
+                >{{t('registerPage.surname')}}</label
               >
               <input
                 type="text"
                 id="surname"
-                placeholder="Surname"
+                :placeholder="t('registerPage.surname')"
                 class="w-full p-3.5 rounded-lg border-none bg-formBg focus:outline-none focus:ring-2 focus:ring-color4 placeholder:text-formPlaceholder text-sm"
                 v-model="surname"
               />
@@ -45,7 +45,7 @@
 
           <div>
             <label for="dateOfBirth" class="block text-medium font-medium text-heading mb-1"
-              >Data urodzenia</label
+              >{{t('registerPage.birthday')}}</label
             >
             <input
               type="date"
@@ -57,7 +57,7 @@
 
           <div>
             <label for="email" class="block text-medium font-medium text-heading mb-1"
-              >Email</label
+              >{{t('registerPage.email')}}</label
             >
             <input
               type="email"
@@ -70,7 +70,7 @@
 
           <div>
             <label for="password" class="block text-medium font-medium text-heading mb-1">
-              Hasło
+              {{t('registerPage.password')}}
             </label>
             <div class="relative">
               <input
@@ -130,7 +130,7 @@
               for="passwordConfirmation"
               class="block text-medium font-medium text-heading mb-1"
             >
-              Powtórz hasło
+              {{t('registerPage.reenterPassword')}}
             </label>
             <div class="relative">
               <input
@@ -189,7 +189,7 @@
             type="submit"
             class="w-full p-3.5 mt-8 rounded-lg bg-white/80 text-heading font-semibold hover:bg-white transition-colors hover:text-color4"
           >
-            {{ loading ? 'Rejestrowanie...' : 'Zarejestruj się' }}
+            {{ loading ? t('registerPage.registration') : t('registerPage.register') }}
           </button>
 
           <transition name="fade">
@@ -204,9 +204,9 @@
 
         <div class="mt-6 text-center text-sm">
           <p class="text-basictext">
-            Masz już konto?
+            {{t('registerPage.loginInfo')}}
             <a href="/login" class="font-medium text-basictext underline hover:text-color4"
-              >Zaloguj się.</a
+              >{{t('registerPage.login')}}</a
             >
           </p>
         </div>
@@ -219,6 +219,9 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const firstName = ref('')
 const surname = ref('')
@@ -238,37 +241,37 @@ const submit = async () => {
   errorMessage.value = ''
 
   if (!firstName.value) {
-    errorMessage.value = 'You have to enter first name.'
+    errorMessage.value = t('registerPage.nameError')
     return
   }
 
   if (!surname.value) {
-    errorMessage.value = 'You have to enter surname.'
+    errorMessage.value = t('registerPage.surnameError')
     return
   }
 
   if (!dateOfBirth.value) {
-    errorMessage.value = 'You have to enter date of birth.'
+    errorMessage.value = t('registerPage.birthdayError')
     return
   }
 
   if (!email.value) {
-    errorMessage.value = 'You have to enter email.'
+    errorMessage.value = t('registerPage.emailError')
     return
   }
 
   if (!password.value) {
-    errorMessage.value = 'You have to enter password.'
+    errorMessage.value = t('registerPage.passwordError')
     return
   }
 
   if (!passwordConfirmation.value) {
-    errorMessage.value = 'You have to retype password.'
+    errorMessage.value = t('registerPage.reenterPasswordError')
     return
   }
 
   if (password.value != passwordConfirmation.value) {
-    errorMessage.value = 'Passwords given are not the same.'
+    errorMessage.value = t('registerPage.differentPasswordsError')
     return
   }
 
@@ -300,12 +303,12 @@ const submit = async () => {
           errorMessage.value = error.response.data?.msg
         }
       } else {
-        errorMessage.value = 'Server error, try later.'
+        errorMessage.value = t('registerPage.serverError')
       }
     } else if (error.request) {
-      errorMessage.value = 'Response error, check your connection.'
+      errorMessage.value = t('registerPage.responseError')
     } else {
-      errorMessage.value = 'Unexpected error.'
+      errorMessage.value = t('registerPage.unexpectedError')
     }
   } finally {
     loading.value = false
