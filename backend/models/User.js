@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-    email: { type: String, required: [ true, "Email adress is required"], unique: true, lowercase: true, trim: true, match: [ /^\S+@\S+\.\S+$/, 'Enter valid email.: example@mail.com' ], },
-    password: { type: String, required: [ true, "Password is required"], minlength: [8, "Password must be at least 8 characters."], select: false },
-    firstName: { type: String, required: [ true, "First name is required"], match: [ /^[\p{L}]+$/u, "Name can contain only letters." ], minlength: [3, "Name should be at least 3 characters"], trim: true, },
-    surname: { type: String, required: [ true, "Surname name is required"], match: [ /^[\p{L}]+$/u, "Surname can contain only letters." ], minlength: [3, "Surname should be at least 3 characters"], trim: true, },
-    dateOfBirth: { type: Date, required: [ true, "Date of birth name is required"], max: [Date.now, "Date of birth cannot be in the future."] },
+    email: { type: String, required: [ true, "emailRequired"], unique: true, lowercase: true, trim: true, match: [ /^\S+@\S+\.\S+$/, "emailInvalid" ], },
+    password: { type: String, required: [ true, "passwordRequired"], minlength: [8, "passwordMinLength"], select: false },
+    firstName: { type: String, required: [ true, "firstNameRequired"], match: [ /^[\p{L}]+$/u, "nameOnlyLetters" ], minlength: [3, "nameMinLength"], trim: true, },
+    surname: { type: String, required: [ true, "surnameRequired"], match: [ /^[\p{L}]+$/u, "surnameOnlyLetters" ], minlength: [3, "surnameMinLength"], trim: true, },
+    dateOfBirth: { type: Date, required: [ true, "dobRequired"], max: [Date.now, "dobNoFuture"] },
     role: { type: Number, default: 0 },
 })
 

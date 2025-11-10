@@ -8,6 +8,6 @@ export const getAllLocations = async (req, res) => {
         res.status(200).json(locations);
     } 
     catch (error) {
-        res.status(500).json({ message: "Internal server error." });
+        res.status(500).json({ message: req.t("internalServerError") });
     }
 };

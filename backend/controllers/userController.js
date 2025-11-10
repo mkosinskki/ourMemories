@@ -31,7 +31,7 @@ export const getUser = async (req, res) => {
 
     res.status(200).json(userToReturn);
   } catch (error) {
-    res.status(500).json({ error: "Internal server error." });
+    res.status(500).json({ message: req.t("internalServerError") });
   }
 };
 
@@ -57,17 +57,17 @@ export const updateUser = async (req, res) => {
     }).select("-password");
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found." });
+      return res.status(404).json({ message: req.t("userNotFound") });
     }
 
     res.status(200).json({
-      message: "Profile updated successfully",
+      message: req.t("profilUpdatedSuccess"),
       user: updatedUser,
     });
   } catch (error) {
     if (error.code === 11000) {
       return res.status(409).json({
-        errors: { email: "User with this email exists." },
+        errors: { email: req.t("emailExists") },
       });
     }
     if (error.name === "ValidationError") {
@@ -77,7 +77,7 @@ export const updateUser = async (req, res) => {
       });
       return res.status(400).json({ errors });
     }
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({ message: req.t("internalServerError") });
   }
 };
 
@@ -86,7 +86,7 @@ export const getUserById = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Incorrect id format." });
+      return res.status(400).json({ message: req.t("badId") });
     }
 
     const user = await User.findById(id).select(
@@ -96,7 +96,7 @@ export const getUserById = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: "No user with specified ID was found." });
+        .json({ message: req.t("userNotFound") });
     }
 
     const postCount = await Memory.countDocuments({ user: id });
@@ -115,6 +115,6 @@ export const getUserById = async (req, res) => {
 
     res.status(200).json(userProfile);
   } catch (error) {
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({ message: req.t("internalServerError") });
   }
 };
