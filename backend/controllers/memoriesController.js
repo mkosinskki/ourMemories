@@ -117,11 +117,11 @@ export const getMemories = async (req, res) => {
       totalMemories: totalMemories,
     });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({ message: req.t("internalServerError") });
   }
 };
 
-export const addMemory = async (req, res) => {
+export const addMemory = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
@@ -132,7 +132,7 @@ export const addMemory = async (req, res) => {
     if (!lng || !lat) {
       return res
         .status(400)
-        .json({ errors: { coordinates: "'lng' and 'lat' are required." } });
+        .json({ errors: { coordinates: req.t('coordinatesRequired') } });
     }
 
     const coordinates = [parseFloat(lng), parseFloat(lat)];
@@ -141,7 +141,7 @@ export const addMemory = async (req, res) => {
       return res
         .status(400)
         .json({
-          errors: { coordinates: "bad format: 'lng' or 'lat'." },
+          errors: { coordinates: req.t('coordinatesBadFormat') },
         });
     }
 
@@ -186,15 +186,7 @@ export const addMemory = async (req, res) => {
     res.status(201).json(populatedMemory);
   } catch (error) {
     await session.abortTransaction();
-
-    if (error.name === "ValidationError") {
-      const errors = {};
-      Object.keys(error.errors).forEach((key) => {
-        errors[key] = error.errors[key].message;
-      });
-      return res.status(400).json({ errors });
-    }
-    res.status(500).json({ message: "Internal server error." });
+    next(error);
   } finally {
     session.endSession();
   }

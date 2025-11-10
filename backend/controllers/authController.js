@@ -6,7 +6,7 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "2h" });
 };
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
     const { email, password, firstName, surname, dateOfBirth } = req.body;
 
     try {
@@ -22,25 +22,13 @@ export const register = async (req, res) => {
         const { password: _, ...userToReturn } = savedUser.toObject();
 
         res.status(201).json({
-            message: "Register successful",
+            message: req.t("registerSuccess"),
             user: userToReturn,
             token: token
         });
 
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            const errors = {};
-            Object.keys(error.errors).forEach(key => {
-                errors[key] = error.errors[key].message;
-            });
-            return res.status(400).json({ errors });
-        }
-        if (error.code === 11000) {
-            return res.status(409).json({
-                errors: { email: 'User with this email exists.' }
-            });
-        }
-        res.status(500).json({ message: "Internal server error." });
+        next(error);
     }
 };
 
@@ -48,19 +36,19 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({ msg: 'Enter your email and password.' });
+        return res.status(400).json({ message: req.t("enterEmailAndPassword") });
     }
 
     try {
         const user = await User.findOne({ email }).select('+password');
 
         if (!user) {
-            return res.status(400).json({ msg: 'Incorrect login/password.' });
+            return res.status(400).json({ message: req.t("incorrectLoginPassword") });
         }
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({ msg: 'Incorrect login/password.' });
+            return res.status(400).json({ message: req.t("incorrectLoginPassword") });
         }
 
         const token = generateToken(user._id);
@@ -69,6 +57,6 @@ export const login = async (req, res) => {
 
     } 
     catch (err) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: req.t("internalServerError") });
     }
 };
