@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from "mongoose";
 import i18next from './i18n.js';
 import i18nextMiddleware from 'i18next-http-middleware';
+import multer from 'multer';
 
 import memoriesRouter from "./routes/memoriesRouter.js"
 import userRouter from "./routes/userRouter.js"
@@ -48,14 +49,24 @@ app.use((err, req, res, next) => {
     }
 
     if (err.code === 11000) {
-        const field = Object.keys(err.keyValue)[0];
-        const value = err.keyValue[field];
         return res.status(409).json({
-            message: req.t('duplicateKey', { field, value }) 
+            errors: {email: req.t('emailExists') }
+        });
+    }
+
+    if (err.message === 'fileTypeInvalid') {
+        return res.status(400).json({
+            errors: { photos: req.t('fileTypeInvalid') } 
+        });
+    }
+
+    if (err instanceof multer.MulterError) {
+        return res.status(400).json({
+            errors: { photos: req.t(err.code) }
         });
     }
     console.error(err);
-    res.status(500).json({ message: req.t('internalServerError') || 'Internal Server Error' });
+    res.status(500).json({ message: req.t('internalServerError')});
 });
 
 export default app;

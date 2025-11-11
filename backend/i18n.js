@@ -31,6 +31,15 @@ const resources = {
       userNotFound: "User not found",
       emailExists: "User with this email exists.",
       badId: "Incorrect id format.",
+      allFieldsRequired: "All fields are required.",
+      noToken: "No token, access denied",
+      userNotExist: "User belonging to this token does no longer exist",
+      tokenExpired: "Token expired.",
+      forbiddenAccess: "Forbidden: You do not have permission to access this resource.",
+      tokenInvalid: "Invalid token.",
+      fileTypeInvalid: "Only image files are allowed.",
+      LIMIT_FILE_SIZE: "File is too large. Maximum size is 10MB.",
+      LIMIT_UNEXPECTED_FILE: "You can upload a maximum of 10 photos.",
     }
   },
   pl: {
@@ -61,7 +70,16 @@ const resources = {
       profilUpdatedSuccess: "Profil zaktualizowany pomyślnie",
       userNotFound: "Nie znaleziono użytkownika",
       emailExists: "Użytkownik z podanym emailem już istnieje.",
-      badId: "Niepoprawny format ID."
+      badId: "Niepoprawny format ID.",
+      allFieldsRequired: "Wszystkie pola są wymagane.",
+      noToken: "Brak tokenu, dostęp zabroniony.",
+      userNotExist: "Użytkownik przypisany do tego tokenu nie istnieje.",
+      tokenExpired: "Token wygasł.",
+      forbiddenAccess: "Zabronione: Nie masz uprawnień do wyświetlania tej zawartości.",
+      tokenInvalid: "Nieprawdiłowy token.",
+      fileTypeInvalid: "Dozwolone są tylko pliki graficzne.",
+      LIMIT_FILE_SIZE: "Plik jest za duży. Maksymalny rozmiar to 10MB.",
+      LIMIT_UNEXPECTED_FILE: "Możesz dodać maksymalnie 10 zdjęć.",
     }
   }
 };
