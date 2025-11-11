@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import Memory from "../models/Memory.js";
 import mongoose from "mongoose";
 
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
   const user = req.user;
 
   try {
@@ -31,16 +31,16 @@ export const getUser = async (req, res) => {
 
     res.status(200).json(userToReturn);
   } catch (error) {
-    res.status(500).json({ message: req.t("internalServerError") });
+    next(error)
   }
 };
 
-export const updateUser = async (req, res) => {
+export const updateUser = async (req, res, next) => {
   const userId = req.user._id;
   const { firstName, surname, email, dateOfBirth } = req.body;
 
   if (!firstName || !surname || !email || !dateOfBirth) {
-    return res.status(400).json({ message: "All fields are required." });
+    return res.status(400).json({ message: req.t("allFieldsRequired") });
   }
 
   try {
@@ -65,23 +65,11 @@ export const updateUser = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(409).json({
-        errors: { email: req.t("emailExists") },
-      });
-    }
-    if (error.name === "ValidationError") {
-      const errors = {};
-      Object.keys(error.errors).forEach((key) => {
-        errors[key] = error.errors[key].message;
-      });
-      return res.status(400).json({ errors });
-    }
-    res.status(500).json({ message: req.t("internalServerError") });
+    next(error)
   }
 };
 
-export const getUserById = async (req, res) => {
+export const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -115,6 +103,6 @@ export const getUserById = async (req, res) => {
 
     res.status(200).json(userProfile);
   } catch (error) {
-    res.status(500).json({ message: req.t("internalServerError") });
+    next(error)
   }
 };

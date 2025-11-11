@@ -2,7 +2,7 @@ import Memory from "../models/Memory.js";
 import Location from "../models/Location.js";
 import mongoose from "mongoose";
 
-export const getMemories = async (req, res) => {
+export const getMemories = async (req, res, next) => {
   try {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 12;
@@ -117,7 +117,7 @@ export const getMemories = async (req, res) => {
       totalMemories: totalMemories,
     });
   } catch (error) {
-    res.status(500).json({ message: req.t("internalServerError") });
+    next(error)
   }
 };
 

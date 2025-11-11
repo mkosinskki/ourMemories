@@ -16,7 +16,7 @@ const fileFilter = (req, file, cb) => {
         cb(null, true);
     } 
     else {
-        cb(new Error('Można przesyłać tylko pliki graficzne.'), false);
+        cb(new Error('fileTypeInvalid'), false);
     }
 };
 

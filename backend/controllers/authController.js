@@ -32,7 +32,7 @@ export const register = async (req, res, next) => {
     }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -56,7 +56,7 @@ export const login = async (req, res) => {
         res.status(200).json({ token: token, user: userToReturn });
 
     } 
-    catch (err) {
-        res.status(500).json({ message: req.t("internalServerError") });
+    catch (error) {
+        next(error)
     }
 };
