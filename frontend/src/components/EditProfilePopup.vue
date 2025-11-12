@@ -98,6 +98,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import apiClient from '../axios.js'
 
 const { t } = useI18n()
 
@@ -145,37 +146,24 @@ async function handleSubmit() {
   errorMessage.value = null
 
   try {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      throw new Error(t('editProfile.errorToken'))
-    }
-
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/me`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      if (data.errors) {
-        throw new Error(Object.values(data.errors).join(' '))
-      }
-      if (data.message) {
-        throw new Error(data.message)
-      }
-      throw new Error(t('editProfile.errorUpdate'))
-    }
+    const { data } = await apiClient.put('/api/user/me', formData)
 
     emit('profile-updated', data.user)
     emit('close')
-  } catch (e) {
-    errorMessage.value = e.message
-    console.error(e)
+  } catch (error) {
+    if (error.response) {
+      if (error.response.data?.errors) {
+        errorMessage.value = Object.values(error.response.data.errors).join(' ')
+      } else if (error.response.data?.message) {
+        errorMessage.value = error.response.data.message
+      } else {
+        errorMessage.value = t('editProfile.errorUpdate')
+      }
+    } else if (error.request) {
+      errorMessage.value = t('editProfile.responseError')
+    } else {
+      errorMessage.value = t('editProfile.unexpectedError')
+    }
   } finally {
     loading.value = false
   }

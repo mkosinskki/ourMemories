@@ -92,41 +92,38 @@ import Navbar from '@/components/Navbar.vue';
 import EditProfilePopup from '@/components/EditProfilePopup.vue'
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import apiClient from '../axios.js'
 
 const { t } = useI18n()
 
 const user = ref(null)
-const isLoading = ref(false)
+const loading = ref(false)
 const error = ref(null)
 
 const isEditPopupVisible = ref(false)
 
 async function fetchUser() {
-  isLoading.value = true
+  loading.value = true
   error.value = null
   try {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      throw new Error(t('profilePage.tokenError'))
-    }
+    const { data } = await apiClient.get('/api/user/me')
+    user.value = data
+  } catch (error) {
+    console.error('fetchUser error:', error)
 
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/me`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
+    if (error.response) {
+      if (error.response.status === 401) {
+        error.value = t('profilePage.expiredTokenError')
+      } else {
+        error.value = error.response.data?.message || t('profilePage.fetchError')
       }
-    })
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error(t('profilePage.expiredToken'))
-      }
-      throw new Error(t('profilePage.fetchError'))
+    } else if (error.request) {
+      error.value = t('profilePage.responseError')
+    } else {
+      error.value = t('profilePage.unexpectedError')
     }
-    user.value = await response.json()
-  } catch (e) {
-    error.value = e.message
-    console.error(e)
   } finally {
-    isLoading.value = false
+    loading.value = false
   }
 }
 

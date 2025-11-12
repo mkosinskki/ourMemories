@@ -217,7 +217,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import apiClient from '../axios.js'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -280,7 +280,7 @@ const submit = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   try {
-    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
+    const response = await apiClient.post(`/api/auth/register`, {
       email: email.value,
       password: password.value,
       firstName: firstName.value,
@@ -290,7 +290,7 @@ const submit = async () => {
 
     localStorage.setItem('token', response.data.token)
     localStorage.setItem('user', JSON.stringify(response.data.user))
-    router.push('/')
+    router.push('/profile')
   } catch (error) {
     if (error.response) {
       if (error.response.status === 400 || error.response.status === 409) {
