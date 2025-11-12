@@ -1,6 +1,4 @@
 import { createI18n } from 'vue-i18n'
-import NotFound from './views/NotFound.vue'
-import Unauthorized from './views/Unauthorized.vue'
 
 function loadLocale() {
   const locale = localStorage.getItem('lang')
@@ -26,8 +24,9 @@ const messages = {
       save: 'Zapisz zmiany',
       saving: 'Zapisywanie...',
       errorDate: 'Błąd formatowania daty:',
-      errorToken: 'Brak tokenu w localstorage.',
-      errorUpdate: 'Błąd zapisu profilu.'
+      errorUpdate: 'Błąd zapisu profilu.',
+      unexpectedError: 'Nieoczekiwany błąd.',
+      responseError: 'Błąd odpowiedzi, sprawdź połączenie internerowe.',
     },
 
     notFound: {
@@ -83,13 +82,14 @@ const messages = {
     profilePage: {
       editProfileButton: 'Edytuj profil',
       statistics: 'Statystyki',
-      tokenError: 'Brak tokenu w localStorage.',
       expiredTokenError: 'Nieautoryzowany dostęp, możliwe wygaśnięcie tokenu.',
       formatingDateError: 'Błąd formatowania daty ',
       fetchError: 'Błąd pobierania użytkownika.',
       addedMemory: 'Dodane wspomnienia',
       visitedLocations: 'Odwiedzone lokacje',
       firstMemory: 'Pierwsze wspomnienie dodane',
+      responseError: 'Błąd odpowiedzi, sprawdź połączenie internerowe.',
+      unexpectedError: 'Nieoczekiwany błąd.',
     },
   },
   en: {
@@ -110,8 +110,9 @@ const messages = {
       save: 'Save changes',
       saving: 'Saving...',
       errorDate: 'Failed to format date:',
-      errorToken: 'Missing token in localstorage.',
       errorUpdate: 'Failed to update profile.',
+      unexpectedError: 'Unexpected error.',
+      responseError: 'Response error, check your connection.',
     },
 
     notFound: {
@@ -167,23 +168,24 @@ const messages = {
     profilePage: {
       editProfileButton: 'Edit profile',
       statistics: 'Statistics',
-      tokenError: 'Missing token in localstorage.',
       expiredTokenError: 'Unauthorized, maybe token expired.',
       formatingDateError: 'Error while formating date',
       fetchError: 'Failed to fetch user data.',
       addedMemory: 'Memories added',
       visitedLocations: 'Visited locations',
       firstMemory: 'First memory added',
+      responseError: 'Response error, check your connection.',
+      unexpectedError: 'Unexpected error.',
     },
   },
 }
 
 const i18n = createI18n({
-  legacy: false, // WAŻNE! Używaj trybu Composition API (Vue 3)
-  locale: loadLocale(), // Ustaw domyślny język
-  fallbackLocale: 'en', // Język, na który przełączy się, gdy brakuje tłumaczenia
-  messages, // Załaduj nasze tłumaczenia
-  globalInjection: true, // Pozwala na dostęp do $t w starym Options API
+  legacy: false,
+  locale: loadLocale(),
+  fallbackLocale: 'pl',
+  messages,
+  globalInjection: true,
 })
 
 export default i18n
