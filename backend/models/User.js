@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     surname: { type: String, required: [ true, "surnameRequired"], match: [ /^[\p{L}]+$/u, "surnameOnlyLetters" ], minlength: [3, "surnameMinLength"], trim: true, },
     dateOfBirth: { type: Date, required: [ true, "dobRequired"], max: [Date.now, "dobNoFuture"] },
     role: { type: Number, default: 0 },
+    avatar: { type: String, default: null },
 })
 
 userSchema.pre('save', async function (next) {

@@ -10,7 +10,7 @@
         <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
 
           <div class="flex items-center gap-4">
-            <img src="https://placehold.co/80x80/F0E68C/FFFFFF" alt="Avatar"
+            <img :src="getAvatarUrl(safeUser.avatar)"
               class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-color3 shadow-sm object-cover shrink-0" />
             <div class="flex flex-col justify-center -translate-y-0.5">
               <h2 class="text-xl md:text-2xl font-bold text-heading">{{ safeUser.firstName }} {{ safeUser.surname }}
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="bg-whiteBlue rounded-xl shadow-md p-5 min-h-[600px]">
+      <div class="bg-whiteBlue rounded-xl shadow-md p-5">
         <div class="bg-color3 rounded-md">
           <h3 class="text-2xl font-bold text-heading text-center mb-6 p-3">
             {{ t('profilePage.statistics') }}
@@ -101,6 +101,23 @@ const loading = ref(false)
 const error = ref(null)
 
 const isEditPopupVisible = ref(false)
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+function getAvatarUrl(path) {
+  if (!path) {
+    return "https://placehold.co/80x80/F0E68C/FFFFFF";
+  }
+
+  if (path.startsWith('https')) {
+    console.log(path);
+    return path;
+  }
+
+  const cleanPath = path.replace(/\\/g, '/');
+  console.log(path)
+  return `${BACKEND_URL}/uploads/${cleanPath}`;
+}
 
 async function fetchUser() {
   loading.value = true
