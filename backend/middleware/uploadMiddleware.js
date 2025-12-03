@@ -27,3 +27,5 @@ const upload = multer({
 });
 
 export const uploadMemoryPhotos = upload.array('photos', 10);
+
+export const uploadAvatar = upload.single('avatar');

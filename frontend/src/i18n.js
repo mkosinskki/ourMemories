@@ -27,6 +27,7 @@ const messages = {
       errorUpdate: 'Błąd zapisu profilu.',
       unexpectedError: 'Nieoczekiwany błąd.',
       responseError: 'Błąd odpowiedzi, sprawdź połączenie internerowe.',
+      changePhoto: 'Zmień zdjęcie',
     },
 
     notFound: {
@@ -113,6 +114,7 @@ const messages = {
       errorUpdate: 'Failed to update profile.',
       unexpectedError: 'Unexpected error.',
       responseError: 'Response error, check your connection.',
+      changePhoto: 'Change photo',
     },
 
     notFound: {
